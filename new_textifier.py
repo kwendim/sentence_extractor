@@ -75,7 +75,6 @@ def htmltotext(the_file):
 		element = wd.find_element_by_class_name('postmetadata-date')
 		date_of_post= element.get_attribute('innerHTML')
 		date_of_post= clear_date(date_of_post)
-		#dprint date_of_post
 	except selenium.common.exceptions.NoSuchElementException: 
 		print "couldn't load date for article " + the_file
 		date_of_post = "unknown"
@@ -96,50 +95,13 @@ def htmltotext(the_file):
 	tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 	data =  '\n-----\n'.join(tokenizer.tokenize(data))
 
-	#unicodedata.normalize('NFKD', data).encode('ascii','ignore')	
-	#data= re.sub(u"(\u2018|\u2019|\u201c|\u201d)", "'", data)
-	#data= re.sub(u"(\u201c'))
+
 	file = codecs.open(date_of_post + '_' + header_name + '.txt', "w", "utf-8")
-	#file = open(date_of_post + '_' + header_name + '.txt','w')
 
 	file.write(header_name + '\n\n')
 	file.write(data)
 	file.close()
 
-	#print header_name
-
-	#wd.get(os.path.join("file://",the_file))
-# def htmltotext(the_file):
-# 	data = open(the_file, 'rb').readlines()
-# 	is_here= False
-# 	for index in range(len(data)):
-# 		if data[index].startswith("##"):
-# 			header= data[index][3:]
-# 			is_here= True
-# 			index= index + 2
-# 			date= data[index]
-# 			is_valid_date=False
-# 			for element in days:
-# 				if date.startswith(element):
-# 					is_valid_date= True
-# 					date= clear_date(date,element)
-# 					print date
-# 					break		
-# 			if not is_valid_date:
-# 				date="unknown"
-# 			new_text=list()
-# 			my_file= open(date+'_' + header +'.txt','w')
-
-# 			while not data[index].startswith("### Related Posts") and index < len(data)-1:
-# 				my_file.write(data[index])
-# 				new_text.append(data[index])
-# 				index += 1
-# 			my_file.close
-
-
-# 			break
-# 	if not is_here:
-# 		print the_file, " is not here"
 
 
 def main(current_folder):
@@ -173,9 +135,6 @@ if __name__=='__main__':
 		os.makedirs(new_folder)
 		os.chdir(new_folder)
 		main(sys.argv[1])
-		#htmltotext('/media/kidus/DATA/Downloads/iCog/web3/index.html')
-		#htmltotext('/home/kidus/Desktop/extracted/deep-panic.html')
-		#print address_split('/media/kidus/DATA/Downloads/iCog/web3/index.html')
+
 	else:
 		print "Enter absolute path to folder with webfiles in it as an argument."
-	#htmltotext(sys.argv[1])
